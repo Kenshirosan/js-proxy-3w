@@ -41,7 +41,7 @@ const validator = {
     },
 };
 
-const handler2 = {
+const handler = {
     get: (target, value, receiver) => {
         const allowed = ['name', 'email', 'age'];
         const comparison = Object.keys(target);
@@ -54,8 +54,8 @@ const handler2 = {
         return target;
     },
 };
-const person = new Proxy({}, validator);
 
+const person = new Proxy({}, validator);
 const contacts = JSON.parse(localStorage.getItem('valid-contact')) || [];
 
 function validateForm(e) {
@@ -87,12 +87,12 @@ function validateEmail(email) {
         const proxys = [];
 
         contacts.forEach(person => {
-            proxys.push(new Proxy(person, handler2));
+            proxys.push(new Proxy(person, handler));
         });
 
         // let person = {};
         proxys.forEach(proxy => {
-            // proxy.name.ouin = 'test'; // balance une erreur, le proxy a gerer
+            // proxy.name.blah = 'test'; // balance une erreur, le proxy a gerer
             console.log(proxy.name.name);
             console.log(proxy.name.age);
             console.log(proxy.name.email);
