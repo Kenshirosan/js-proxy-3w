@@ -1,0 +1,41 @@
+body {
+    background-color: #2e3440;
+    color: white;
+}
+
+.container {
+    width: 800px;
+    margin: auto;
+    text-align: center;
+}
+
+form {
+    width: 100%;
+    padding: 2rem;
+}
+
+label,
+button {
+    display: inline-block;
+    width: 90%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+button {
+    border: none;
+    background-color: lightgreen;
+    padding: 1rem;
+}
+
+input {
+    width: 90%;
+    padding: 1rem;
+    margin: auto;
+}
+
+input[placeholder] {
+    color: grey;
+    font-weight: bold;
+    font-size: 1rem;
+}
