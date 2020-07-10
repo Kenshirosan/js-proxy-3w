@@ -55,6 +55,9 @@ const handler = {
     },
 };
 
+const person = new Proxy({}, validator);
+const contacts = JSON.parse(localStorage.getItem('valid-contact')) || [];
+
 function validateForm(e) {
     e.preventDefault();
 
@@ -96,4 +99,20 @@ const contacts = JSON.parse(localStorage.getItem('valid-contact')) || [];
         console.log(person.name.age);
         console.log(person.name.email);
     });
+
+    if (contacts != []) {
+        const proxys = [];
+
+        contacts.forEach(person => {
+            proxys.push(new Proxy(person, handler));
+        });
+
+        // let person = {};
+        proxys.forEach(proxy => {
+            // proxy.name.blah = 'test'; // balance une erreur, le proxy a gerer
+            console.log(proxy.name.name);
+            console.log(proxy.name.age);
+            console.log(proxy.name.email);
+        });
+    }
 })();
