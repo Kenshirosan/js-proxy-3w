@@ -1,4 +1,10 @@
 // Validation de Formulaire avec Proxy
+class CustomError extends Error {
+    constructor(error) {
+        super(error);
+    }
+}
+
 const validator = {
     set: (target, key, value) => {
         const allowed = ['name', 'email', 'age'];
@@ -42,21 +48,18 @@ const validator = {
 };
 
 const handler = {
-    get: (target, value, receiver) => {
+    get: (target, value) => {
         const allowed = ['name', 'email', 'age'];
         const comparison = Object.keys(target);
 
         if (JSON.stringify(allowed) !== JSON.stringify(comparison)) {
             // Ici on pourrait appeler un fonction qui s'occupe d'afficher l'erreur pour le client
-            throw new Error(`Corrupted data`);
+            throw new CustomError(`Corrupted data`);
         }
 
         return target;
     },
 };
-
-const person = new Proxy({}, validator);
-const contacts = JSON.parse(localStorage.getItem('valid-contact')) || [];
 
 function validateForm(e) {
     e.preventDefault();
@@ -94,25 +97,7 @@ const contacts = JSON.parse(localStorage.getItem('valid-contact')) || [];
     });
 
     persons.forEach(person => {
-        // person.name.blah = 'test'; // balance une erreur, le person a gerer
-        console.log(person.name.name);
-        console.log(person.name.age);
-        console.log(person.name.email);
+        person.name.blah = 'test'; // balance une erreur, le handler a gerer automatiquement
+        console.log(person.name.name, person.name.age, person.name.email);
     });
-
-    if (contacts != []) {
-        const proxys = [];
-
-        contacts.forEach(person => {
-            proxys.push(new Proxy(person, handler));
-        });
-
-        // let person = {};
-        proxys.forEach(proxy => {
-            // proxy.name.blah = 'test'; // balance une erreur, le proxy a gerer
-            console.log(proxy.name.name);
-            console.log(proxy.name.age);
-            console.log(proxy.name.email);
-        });
-    }
 })();
