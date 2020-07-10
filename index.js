@@ -41,7 +41,7 @@ const validator = {
     },
 };
 
-const handler2 = {
+const handler = {
     get: (target, value, receiver) => {
         const allowed = ['name', 'email', 'age'];
         const comparison = Object.keys(target);
@@ -54,9 +54,6 @@ const handler2 = {
         return target;
     },
 };
-const person = new Proxy({}, validator);
-
-const contacts = JSON.parse(localStorage.getItem('valid-contact')) || [];
 
 function validateForm(e) {
     e.preventDefault();
@@ -80,22 +77,23 @@ function validateEmail(email) {
     return re.test(String(email).toLowerCase());
 }
 
-(function(e) {
+const person = new Proxy({}, validator);
+const contacts = JSON.parse(localStorage.getItem('valid-contact')) || [];
+
+(function() {
     document.querySelector('form').addEventListener('submit', validateForm);
+    if (!contacts) return;
 
-    if (contacts != []) {
-        const proxys = [];
+    const persons = [];
 
-        contacts.forEach(person => {
-            proxys.push(new Proxy(person, handler2));
-        });
+    contacts.forEach(person => {
+        persons.push(new Proxy(person, handler));
+    });
 
-        // let person = {};
-        proxys.forEach(proxy => {
-            // proxy.name.ouin = 'test'; // balance une erreur, le proxy a gerer
-            console.log(proxy.name.name);
-            console.log(proxy.name.age);
-            console.log(proxy.name.email);
-        });
-    }
+    persons.forEach(person => {
+        // person.name.blah = 'test'; // balance une erreur, le person a gerer
+        console.log(person.name.name);
+        console.log(person.name.age);
+        console.log(person.name.email);
+    });
 })();
