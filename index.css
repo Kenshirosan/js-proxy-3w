@@ -39,3 +39,16 @@ input[placeholder] {
     font-weight: bold;
     font-size: 1rem;
 }
+
+#error {
+    position: absolute;
+    background-color: rgba(200, 20, 50, 0.8);
+    padding: 1em;
+    top: 25px;
+    left: 25px;
+}
+
+#error p {
+    color: white;
+    font-weight: bold;
+}
