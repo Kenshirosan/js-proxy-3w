@@ -7,7 +7,7 @@ const contacts = JSON.parse(localStorage.getItem('valid-contact')) || [];
 
 window.state = {
     errors: new Errors(),
-    message: '',
+    message: 'TODO: un success message',
 };
 
 function validateForm(e) {
