@@ -5,7 +5,7 @@ import { validator, handler, createError } from './handlers.js';
 const person = new Proxy({}, validator);
 const contacts = JSON.parse(localStorage.getItem('valid-contact')) || [];
 
-window.state = {
+globalThis.state = {
     errors: new Errors(),
     message: 'TODO: un success message',
 };
